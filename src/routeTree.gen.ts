@@ -9,8 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VoiceRouteImport } from './routes/voice'
+import { Route as VideoRouteImport } from './routes/video'
+import { Route as ThumbnailRouteImport } from './routes/thumbnail'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ScriptRouteImport } from './routes/script'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as NicheRouteImport } from './routes/niche'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VoiceRoute = VoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideoRoute = VideoRouteImport.update({
+  id: '/video',
+  path: '/video',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ThumbnailRoute = ThumbnailRouteImport.update({
+  id: '/thumbnail',
+  path: '/thumbnail',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScriptRoute = ScriptRouteImport.update({
+  id: '/script',
+  path: '/script',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NicheRoute = NicheRouteImport.update({
+  id: '/niche',
+  path: '/niche',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +61,130 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/niche': typeof NicheRoute
+  '/onboarding': typeof OnboardingRoute
+  '/script': typeof ScriptRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/thumbnail': typeof ThumbnailRoute
+  '/video': typeof VideoRoute
+  '/voice': typeof VoiceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/niche': typeof NicheRoute
+  '/onboarding': typeof OnboardingRoute
+  '/script': typeof ScriptRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/thumbnail': typeof ThumbnailRoute
+  '/video': typeof VideoRoute
+  '/voice': typeof VoiceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/niche': typeof NicheRoute
+  '/onboarding': typeof OnboardingRoute
+  '/script': typeof ScriptRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/thumbnail': typeof ThumbnailRoute
+  '/video': typeof VideoRoute
+  '/voice': typeof VoiceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/niche'
+    | '/onboarding'
+    | '/script'
+    | '/sitemap.xml'
+    | '/thumbnail'
+    | '/video'
+    | '/voice'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/niche'
+    | '/onboarding'
+    | '/script'
+    | '/sitemap.xml'
+    | '/thumbnail'
+    | '/video'
+    | '/voice'
+  id:
+    | '__root__'
+    | '/'
+    | '/niche'
+    | '/onboarding'
+    | '/script'
+    | '/sitemap.xml'
+    | '/thumbnail'
+    | '/video'
+    | '/voice'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  NicheRoute: typeof NicheRoute
+  OnboardingRoute: typeof OnboardingRoute
+  ScriptRoute: typeof ScriptRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ThumbnailRoute: typeof ThumbnailRoute
+  VideoRoute: typeof VideoRoute
+  VoiceRoute: typeof VoiceRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/voice': {
+      id: '/voice'
+      path: '/voice'
+      fullPath: '/voice'
+      preLoaderRoute: typeof VoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/video': {
+      id: '/video'
+      path: '/video'
+      fullPath: '/video'
+      preLoaderRoute: typeof VideoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/thumbnail': {
+      id: '/thumbnail'
+      path: '/thumbnail'
+      fullPath: '/thumbnail'
+      preLoaderRoute: typeof ThumbnailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/script': {
+      id: '/script'
+      path: '/script'
+      fullPath: '/script'
+      preLoaderRoute: typeof ScriptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/niche': {
+      id: '/niche'
+      path: '/niche'
+      fullPath: '/niche'
+      preLoaderRoute: typeof NicheRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +197,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  NicheRoute: NicheRoute,
+  OnboardingRoute: OnboardingRoute,
+  ScriptRoute: ScriptRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ThumbnailRoute: ThumbnailRoute,
+  VideoRoute: VideoRoute,
+  VoiceRoute: VoiceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
