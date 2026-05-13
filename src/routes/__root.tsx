@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { AppLayout } from "@/components/app/AppLayout";
 
 function NotFoundComponent() {
   return (
@@ -72,14 +73,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "VIDPRO — Cinematic Creator OS" },
+      { name: "description", content: "VIDPRO is the cinematic AI operating system for serious YouTube creators — script, video, voice, thumbnails, and niche intelligence in one immersive workspace." },
+      { name: "author", content: "VIDPRO" },
+      { property: "og:title", content: "VIDPRO — Cinematic Creator OS" },
+      { property: "og:description", content: "The cinematic AI operating system for serious creators." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
