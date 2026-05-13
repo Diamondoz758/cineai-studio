@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VoiceRouteImport } from './routes/voice'
 import { Route as VideoRouteImport } from './routes/video'
 import { Route as ThumbnailRouteImport } from './routes/thumbnail'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScriptRouteImport } from './routes/script'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NicheRouteImport } from './routes/niche'
@@ -30,6 +31,11 @@ const VideoRoute = VideoRouteImport.update({
 const ThumbnailRoute = ThumbnailRouteImport.update({
   id: '/thumbnail',
   path: '/thumbnail',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ScriptRoute = ScriptRouteImport.update({
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/niche': typeof NicheRoute
   '/onboarding': typeof OnboardingRoute
   '/script': typeof ScriptRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thumbnail': typeof ThumbnailRoute
   '/video': typeof VideoRoute
   '/voice': typeof VoiceRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/niche': typeof NicheRoute
   '/onboarding': typeof OnboardingRoute
   '/script': typeof ScriptRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thumbnail': typeof ThumbnailRoute
   '/video': typeof VideoRoute
   '/voice': typeof VoiceRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/niche': typeof NicheRoute
   '/onboarding': typeof OnboardingRoute
   '/script': typeof ScriptRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thumbnail': typeof ThumbnailRoute
   '/video': typeof VideoRoute
   '/voice': typeof VoiceRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/niche'
     | '/onboarding'
     | '/script'
+    | '/sitemap.xml'
     | '/thumbnail'
     | '/video'
     | '/voice'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/niche'
     | '/onboarding'
     | '/script'
+    | '/sitemap.xml'
     | '/thumbnail'
     | '/video'
     | '/voice'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/niche'
     | '/onboarding'
     | '/script'
+    | '/sitemap.xml'
     | '/thumbnail'
     | '/video'
     | '/voice'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   NicheRoute: typeof NicheRoute
   OnboardingRoute: typeof OnboardingRoute
   ScriptRoute: typeof ScriptRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ThumbnailRoute: typeof ThumbnailRoute
   VideoRoute: typeof VideoRoute
   VoiceRoute: typeof VoiceRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/thumbnail'
       fullPath: '/thumbnail'
       preLoaderRoute: typeof ThumbnailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/script': {
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   NicheRoute: NicheRoute,
   OnboardingRoute: OnboardingRoute,
   ScriptRoute: ScriptRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ThumbnailRoute: ThumbnailRoute,
   VideoRoute: VideoRoute,
   VoiceRoute: VoiceRoute,
@@ -187,3 +208,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
