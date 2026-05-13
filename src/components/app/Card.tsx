@@ -28,7 +28,7 @@ export const GlassCard = forwardRef<HTMLDivElement, CardProps>(
               "radial-gradient(600px circle at var(--mx, 50%) var(--my, 0%), oklch(0.68 0.22 295 / 0.12), transparent 40%)",
           }}
         />
-        <div className="relative">{children}</div>
+        <div className="relative">{children as React.ReactNode}</div>
       </motion.div>
     );
   },
