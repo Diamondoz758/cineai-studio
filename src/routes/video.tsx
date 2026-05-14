@@ -129,12 +129,15 @@ function VideoStudio() {
                   <div className="w-20 text-[11px] uppercase tracking-wider text-muted-foreground">{track}</div>
                   <div className="relative flex-1 overflow-hidden rounded-md border border-glass-border bg-white/[0.02]">
                     <div className="flex h-8">
-                      {SCENES.map((s, i) => (
-                        <div
-                          key={i}
-                          className={`flex-1 border-r border-black/30 bg-gradient-to-r ${s.grad} opacity-${ti === 0 ? 80 : ti === 1 ? 60 : ti === 2 ? 40 : 30}`}
-                        />
-                      ))}
+              {SCENES.map((s, i) => {
+                        const op = ti === 0 ? "opacity-80" : ti === 1 ? "opacity-60" : ti === 2 ? "opacity-40" : "opacity-30";
+                        return (
+                          <div
+                            key={i}
+                            className={`flex-1 border-r border-black/30 bg-gradient-to-r ${s.grad} ${op}`}
+                          />
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

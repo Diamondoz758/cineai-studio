@@ -106,7 +106,7 @@ export function AppLayout() {
                 </kbd>
               </div>
               <div className="ml-auto flex items-center gap-2">
-                <button className="grid h-9 w-9 place-items-center rounded-xl border border-glass-border bg-white/[0.03] text-muted-foreground hover:text-foreground">
+                <button aria-label="Notifications" className="grid h-9 w-9 place-items-center rounded-xl border border-glass-border bg-white/[0.03] text-muted-foreground hover:text-foreground">
                   <Bell className="h-4 w-4" />
                 </button>
                 <button className="hidden h-9 items-center gap-2 rounded-xl bg-gradient-primary px-3 text-sm font-medium text-white shadow-glow transition-transform hover:scale-[1.02] sm:flex">
