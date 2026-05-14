@@ -250,6 +250,7 @@ function Slider({ label, value, onChange }: { label: string; value: number; onCh
       </div>
       <input
         type="range" min={0} max={100} value={value}
+        aria-label={label}
         onChange={(e) => onChange(Number(e.target.value))}
         className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/[0.08] accent-violet"
         style={{ background: `linear-gradient(to right, oklch(0.68 0.22 295) 0%, oklch(0.7 0.27 340) ${value}%, oklch(1 0 0 / 0.06) ${value}%)` }}
