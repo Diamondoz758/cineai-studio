@@ -59,6 +59,8 @@ function VoiceStudio() {
             <div className="mb-4 flex items-center gap-3">
               <button
                 onClick={() => setPlaying((p) => !p)}
+                aria-label={playing ? "Pause narration" : "Play narration"}
+                aria-pressed={playing}
                 className="grid h-12 w-12 place-items-center rounded-full bg-gradient-primary shadow-glow transition-transform hover:scale-105"
               >
                 {playing ? <Pause className="h-5 w-5 text-white" /> : <Play className="h-5 w-5 fill-current text-white" />}
@@ -68,8 +70,8 @@ function VoiceStudio() {
                 <div className="font-mono text-[11px] text-muted-foreground">02:14 / 12:48 · 48kHz · 24-bit</div>
               </div>
               <div className="ml-auto flex items-center gap-2 text-muted-foreground">
-                <Volume2 className="h-4 w-4" />
-                <input type="range" defaultValue={70} className="h-1 w-24 appearance-none rounded-full bg-white/10 accent-violet" />
+                <Volume2 className="h-4 w-4" aria-hidden="true" />
+                <input type="range" defaultValue={70} aria-label="Playback volume" className="h-1 w-24 appearance-none rounded-full bg-white/10 accent-violet" />
               </div>
             </div>
 
