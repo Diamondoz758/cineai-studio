@@ -62,6 +62,7 @@ function NicheIntel() {
         <div className="relative">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
+            aria-label="Niche intelligence search"
             placeholder={
               tab === "creator"
                 ? "Search a YouTube channel or creator…"

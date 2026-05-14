@@ -101,8 +101,8 @@ function VideoStudio() {
                     <div className="absolute left-2 top-2 rounded-md bg-black/40 px-1.5 py-0.5 font-mono text-[10px] text-white backdrop-blur">
                       {s.t}
                     </div>
-                    <button className="absolute inset-0 grid place-items-center opacity-0 transition-opacity group-hover:opacity-100">
-                      <span className="grid h-10 w-10 place-items-center rounded-full bg-white/95 text-background shadow-glow">
+                    <button aria-label={`Preview scene at ${s.t} — ${s.title}`} className="absolute inset-0 grid place-items-center opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100">
+                      <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-full bg-white/95 text-background shadow-glow">
                         <Play className="h-4 w-4 fill-current" />
                       </span>
                     </button>
@@ -250,6 +250,7 @@ function Slider({ label, value, onChange }: { label: string; value: number; onCh
       </div>
       <input
         type="range" min={0} max={100} value={value}
+        aria-label={label}
         onChange={(e) => onChange(Number(e.target.value))}
         className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/[0.08] accent-violet"
         style={{ background: `linear-gradient(to right, oklch(0.68 0.22 295) 0%, oklch(0.7 0.27 340) ${value}%, oklch(1 0 0 / 0.06) ${value}%)` }}

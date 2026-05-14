@@ -177,7 +177,7 @@ function ThumbnailStudio() {
                   <span className="uppercase tracking-wider text-muted-foreground">{s.l}</span>
                   <span className="font-mono text-foreground">{s.v}</span>
                 </div>
-                <input type="range" min={0} max={100} defaultValue={s.v} className="h-1.5 w-full appearance-none rounded-full bg-white/[0.06] accent-violet" />
+                <input type="range" min={0} max={100} defaultValue={s.v} aria-label={s.l} className="h-1.5 w-full appearance-none rounded-full bg-white/[0.06] accent-violet" />
               </div>
             ))}
           </GlassCard>

@@ -109,7 +109,7 @@ function Dashboard() {
                     <span className="rounded-full border border-white/20 bg-black/30 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white backdrop-blur">
                       {p.tone}
                     </span>
-                    <button className="grid h-9 w-9 place-items-center rounded-full bg-white/95 text-background shadow-glow transition-transform group-hover:scale-110">
+                    <button aria-label={`Open project: ${p.title}`} className="grid h-11 w-11 place-items-center rounded-full bg-white/95 text-background shadow-glow transition-transform group-hover:scale-110">
                       <Play className="h-4 w-4 fill-current" />
                     </button>
                   </div>
