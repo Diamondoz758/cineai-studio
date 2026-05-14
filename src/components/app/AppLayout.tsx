@@ -96,13 +96,15 @@ export function AppLayout() {
             <div className="flex h-16 items-center gap-3 px-4 md:px-8">
               <div className="md:hidden font-display text-lg font-bold text-gradient">VIDPRO</div>
               <div className="relative ml-2 hidden flex-1 max-w-xl md:flex">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Search aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <input
+                  type="search"
+                  aria-label="Search projects, scripts, and creators"
                   placeholder="Search projects, scripts, creators…"
                   className="h-10 w-full rounded-xl border border-glass-border bg-white/[0.03] pl-10 pr-20 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-violet/40 focus:outline-none focus:ring-2 focus:ring-violet/20"
                 />
                 <kbd className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-md border border-glass-border bg-white/5 px-1.5 py-0.5 text-[10px] text-muted-foreground">
-                  <Command className="h-3 w-3" /> K
+                  <Command aria-hidden="true" className="h-3 w-3" /> K
                 </kbd>
               </div>
               <div className="ml-auto flex items-center gap-2">
