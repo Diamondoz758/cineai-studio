@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { GlassCard } from "@/components/app/Card";
 import { PageHeader } from "@/components/app/PageHeader";
+import { PROJECTS } from "@/lib/projects";
 
 export const Route = createFileRoute("/")({
   head: () => ({
