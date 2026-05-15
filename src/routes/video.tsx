@@ -1,11 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Clapperboard, Download, FileUp, Film, Layers, Play, Sparkles, Upload, Wand2 } from "lucide-react";
+import { ArrowLeft, Clapperboard, Download, FileUp, Film, Layers, Play, Sparkles, Upload, Wand2 } from "lucide-react";
+import { toast } from "sonner";
 import { GlassCard } from "@/components/app/Card";
 import { PageHeader } from "@/components/app/PageHeader";
+import { getProject, type Project } from "@/lib/projects";
+
+type VideoSearch = { project?: string };
 
 export const Route = createFileRoute("/video")({
+  validateSearch: (search: Record<string, unknown>): VideoSearch => ({
+    project: typeof search.project === "string" ? search.project : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Video Studio — VIDPRO" },
@@ -22,7 +29,7 @@ const STYLES = [
 ];
 const DURATIONS = ["Shorts", "1–3 Min", "5–10 Min", "10–15 Min", "20+ Min"];
 
-const SCENES = [
+const DEFAULT_SCENES: Project["scenes"] = [
   { t: "00:00", title: "Cold Open — fog over the cliffs", mood: "Suspense", grad: "from-violet to-magenta" },
   { t: "00:14", title: "Lighthouse silhouette emerges", mood: "Awe", grad: "from-cyan to-violet" },
   { t: "00:42", title: "Cut to keeper's journal pages", mood: "Curiosity", grad: "from-amber to-magenta" },
@@ -32,8 +39,12 @@ const SCENES = [
 ];
 
 function VideoStudio() {
-  const [style, setStyle] = useState("Cinematic Realism");
-  const [duration, setDuration] = useState("5–10 Min");
+  const { project: projectSlug } = Route.useSearch();
+  const project = getProject(projectSlug);
+
+  const [style, setStyle] = useState(project?.style ?? "Cinematic Realism");
+  const [duration, setDuration] = useState(project?.duration ?? "5–10 Min");
+  const [script, setScript] = useState(project?.script ?? "");
   const [pacing, setPacing] = useState(60);
   const [intensity, setIntensity] = useState(75);
   const [motion_, setMotion] = useState(50);
@@ -41,18 +52,57 @@ function VideoStudio() {
   const [transition, setTransition] = useState(35);
   const [rhythm, setRhythm] = useState(55);
 
+  // Re-sync when switching projects via the URL
+  useEffect(() => {
+    if (project) {
+      setStyle(project.style);
+      setDuration(project.duration);
+      setScript(project.script);
+      toast.success(`Loaded "${project.title}"`, {
+        description: `${project.scenes.length} scenes · ${project.style}`,
+      });
+    }
+  }, [project?.slug]);
+
+  const scenes = project?.scenes ?? DEFAULT_SCENES;
+
+  const handleGenerate = () => {
+    if (!script.trim()) {
+      toast.error("Add a script first", { description: "Paste or import a script before generating." });
+      return;
+    }
+    toast.success("Generation queued", {
+      description: `${style} · ${duration} · ${scenes.length} scenes`,
+    });
+  };
+
   return (
     <div className="mx-auto max-w-7xl">
       <PageHeader
-        eyebrow="Video Studio"
-        title="Direct the frame, frame by frame"
-        description="A cinematic AI workspace for storyboards, scene breakdowns, and render orchestration."
+        eyebrow={project ? `Project · ${project.tone}` : "Video Studio"}
+        title={project ? project.title : "Direct the frame, frame by frame"}
+        description={
+          project
+            ? `Resuming production at ${project.progress}% — every scene, slider, and render restored.`
+            : "A cinematic AI workspace for storyboards, scene breakdowns, and render orchestration."
+        }
         actions={
           <>
+            {project && (
+              <Link
+                to="/"
+                className="hidden h-10 items-center gap-2 rounded-xl border border-glass-border bg-white/[0.04] px-3 text-sm text-muted-foreground hover:bg-white/[0.08] hover:text-foreground sm:flex"
+              >
+                <ArrowLeft className="h-4 w-4" /> All projects
+              </Link>
+            )}
             <button className="flex h-10 items-center gap-2 rounded-xl border border-glass-border bg-white/[0.04] px-4 text-sm text-foreground hover:bg-white/[0.08]">
               <FileUp className="h-4 w-4" /> Import script
             </button>
-            <button className="flex h-10 items-center gap-2 rounded-xl bg-gradient-primary px-4 text-sm font-medium text-white shadow-glow">
+            <button
+              onClick={handleGenerate}
+              className="flex h-10 items-center gap-2 rounded-xl bg-gradient-primary px-4 text-sm font-medium text-white shadow-glow transition-transform hover:scale-[1.02]"
+            >
               <Sparkles className="h-4 w-4" /> Generate video
             </button>
           </>
@@ -74,6 +124,8 @@ function VideoStudio() {
               </span>
             </div>
             <textarea
+              value={script}
+              onChange={(e) => setScript(e.target.value)}
               placeholder="Paste your script — the studio will break it into scenes, shots, and cinematic beats…"
               className="h-40 w-full resize-none rounded-xl border border-glass-border bg-white/[0.03] p-4 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-violet/40 focus:outline-none focus:ring-2 focus:ring-violet/20"
             />
@@ -84,12 +136,12 @@ function VideoStudio() {
             <div className="mb-4 flex items-center gap-2">
               <Layers className="h-4 w-4 text-cyan" />
               <span className="font-display text-sm font-semibold">Cinematic Storyboard</span>
-              <span className="ml-auto text-[11px] text-muted-foreground">6 scenes · auto-generated</span>
+              <span className="ml-auto text-[11px] text-muted-foreground">{scenes.length} scenes · auto-generated</span>
             </div>
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-              {SCENES.map((s, i) => (
+              {scenes.map((s, i) => (
                 <motion.div
-                  key={s.t}
+                  key={`${s.t}-${i}`}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
@@ -121,7 +173,9 @@ function VideoStudio() {
             <div className="mb-3 flex items-center gap-2">
               <Clapperboard className="h-4 w-4 text-magenta" />
               <span className="font-display text-sm font-semibold">Visual Timeline</span>
-              <span className="ml-auto font-mono text-[11px] text-muted-foreground">00:00 — 02:18</span>
+              <span className="ml-auto font-mono text-[11px] text-muted-foreground">
+                00:00 — {scenes[scenes.length - 1]?.t ?? "00:00"}
+              </span>
             </div>
             <div className="space-y-2">
               {["Visuals", "Voiceover", "Music", "SFX"].map((track, ti) => (
@@ -129,7 +183,7 @@ function VideoStudio() {
                   <div className="w-20 text-[11px] uppercase tracking-wider text-muted-foreground">{track}</div>
                   <div className="relative flex-1 overflow-hidden rounded-md border border-glass-border bg-white/[0.02]">
                     <div className="flex h-8">
-              {SCENES.map((s, i) => {
+                      {scenes.map((s, i) => {
                         const op = ti === 0 ? "opacity-80" : ti === 1 ? "opacity-60" : ti === 2 ? "opacity-40" : "opacity-30";
                         return (
                           <div
@@ -157,8 +211,18 @@ function VideoStudio() {
               className="h-24 w-full resize-none rounded-xl border border-glass-border bg-white/[0.03] p-4 text-sm placeholder:text-muted-foreground/70 focus:border-amber/40 focus:outline-none focus:ring-2 focus:ring-amber/20"
             />
             <div className="mt-3 flex justify-end gap-2">
-              <button className="rounded-lg border border-glass-border bg-white/[0.03] px-3 py-2 text-xs text-muted-foreground">Suggest fixes</button>
-              <button className="rounded-lg bg-gradient-amber px-3 py-2 text-xs font-medium text-background">Regenerate selected</button>
+              <button
+                onClick={() => toast("Suggested fixes ready", { description: "3 scenes flagged for pacing review." })}
+                className="rounded-lg border border-glass-border bg-white/[0.03] px-3 py-2 text-xs text-muted-foreground hover:text-foreground"
+              >
+                Suggest fixes
+              </button>
+              <button
+                onClick={() => toast.success("Regeneration queued", { description: "Selected scenes will refresh." })}
+                className="rounded-lg bg-gradient-amber px-3 py-2 text-xs font-medium text-background"
+              >
+                Regenerate selected
+              </button>
             </div>
           </GlassCard>
         </div>
@@ -231,7 +295,10 @@ function VideoStudio() {
                 </div>
               ))}
             </div>
-            <button className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-glass-border bg-white/[0.04] py-2 text-xs text-foreground hover:bg-white/[0.08]">
+            <button
+              onClick={() => toast.success("Export started", { description: "Master cut will be ready in your Renders panel." })}
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-glass-border bg-white/[0.04] py-2 text-xs text-foreground hover:bg-white/[0.08]"
+            >
               <Download className="h-3.5 w-3.5" /> Export master
             </button>
           </GlassCard>

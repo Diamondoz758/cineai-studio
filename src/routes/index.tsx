@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { GlassCard } from "@/components/app/Card";
 import { PageHeader } from "@/components/app/PageHeader";
+import { PROJECTS } from "@/lib/projects";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,12 +28,6 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
-const PROJECTS = [
-  { title: "The Last Lighthouse Keeper", style: "Cinematic Realism", progress: 78, tone: "Documentary", thumb: "from-violet to-magenta" },
-  { title: "Why Tokyo Never Sleeps", style: "Hyper Realistic", progress: 42, tone: "Curiosity-Driven", thumb: "from-cyan to-emerald" },
-  { title: "The Vault Beneath Berlin", style: "Analog Horror", progress: 91, tone: "Suspense", thumb: "from-amber to-magenta" },
-  { title: "Operation Blackbird", style: "Dark Documentary", progress: 23, tone: "Investigative", thumb: "from-violet to-cyan" },
-];
 
 const RENDERS = [
   { name: "ep_07_final_4k.mp4", time: "2m ago", status: "Rendered", tone: "text-emerald" },
@@ -102,8 +97,9 @@ function Dashboard() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {PROJECTS.map((p, i) => (
               <Link
-                key={p.title}
+                key={p.slug}
                 to="/video"
+                search={{ project: p.slug }}
                 aria-label={`Open project: ${p.title}`}
                 className="block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-violet"
               >
