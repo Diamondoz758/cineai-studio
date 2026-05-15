@@ -28,12 +28,6 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
-const PROJECTS = [
-  { title: "The Last Lighthouse Keeper", style: "Cinematic Realism", progress: 78, tone: "Documentary", thumb: "from-violet to-magenta" },
-  { title: "Why Tokyo Never Sleeps", style: "Hyper Realistic", progress: 42, tone: "Curiosity-Driven", thumb: "from-cyan to-emerald" },
-  { title: "The Vault Beneath Berlin", style: "Analog Horror", progress: 91, tone: "Suspense", thumb: "from-amber to-magenta" },
-  { title: "Operation Blackbird", style: "Dark Documentary", progress: 23, tone: "Investigative", thumb: "from-violet to-cyan" },
-];
 
 const RENDERS = [
   { name: "ep_07_final_4k.mp4", time: "2m ago", status: "Rendered", tone: "text-emerald" },
