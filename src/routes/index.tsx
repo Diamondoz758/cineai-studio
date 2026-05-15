@@ -101,36 +101,43 @@ function Dashboard() {
           <SectionTitle icon={Clapperboard} title="Active Projects" hint="Auto-saved · last 24h" />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {PROJECTS.map((p, i) => (
-              <GlassCard key={p.title} interactive glow className="overflow-hidden">
-                <div className={`relative h-32 bg-gradient-to-br ${p.thumb}`}>
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
-                    <span className="rounded-full border border-white/20 bg-black/30 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white backdrop-blur">
-                      {p.tone}
-                    </span>
-                    <button aria-label={`Open project: ${p.title}`} className="grid h-11 w-11 place-items-center rounded-full bg-white/95 text-background shadow-glow transition-transform group-hover:scale-110">
-                      <Play className="h-4 w-4 fill-current" />
-                    </button>
+              <Link
+                key={p.title}
+                to="/video"
+                aria-label={`Open project: ${p.title}`}
+                className="block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+              >
+                <GlassCard interactive glow className="overflow-hidden">
+                  <div className={`relative h-32 bg-gradient-to-br ${p.thumb}`}>
+                    <div className="absolute inset-0 grid-bg opacity-30" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                      <span className="rounded-full border border-white/20 bg-black/30 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white backdrop-blur">
+                        {p.tone}
+                      </span>
+                      <span className="grid h-11 w-11 place-items-center rounded-full bg-white/95 text-background shadow-glow transition-transform group-hover:scale-110">
+                        <Play className="h-4 w-4 fill-current" />
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="p-4">
-                  <div className="font-display font-semibold text-foreground">{p.title}</div>
-                  <div className="mt-1 text-xs text-muted-foreground">{p.style}</div>
-                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${p.progress}%` }}
-                      transition={{ duration: 1.2, delay: 0.1 * i, ease: "easeOut" }}
-                      className="h-full bg-gradient-primary"
-                    />
+                  <div className="p-4">
+                    <div className="font-display font-semibold text-foreground">{p.title}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{p.style}</div>
+                    <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${p.progress}%` }}
+                        transition={{ duration: 1.2, delay: 0.1 * i, ease: "easeOut" }}
+                        className="h-full bg-gradient-primary"
+                      />
+                    </div>
+                    <div className="mt-2 flex justify-between text-[11px] text-muted-foreground">
+                      <span>Production</span>
+                      <span className="text-foreground">{p.progress}%</span>
+                    </div>
                   </div>
-                  <div className="mt-2 flex justify-between text-[11px] text-muted-foreground">
-                    <span>Production</span>
-                    <span className="text-foreground">{p.progress}%</span>
-                  </div>
-                </div>
-              </GlassCard>
+                </GlassCard>
+              </Link>
             ))}
           </div>
 
