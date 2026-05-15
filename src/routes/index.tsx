@@ -176,7 +176,7 @@ function Dashboard() {
             <div className="mt-4 space-y-3">
               {[
                 { label: "Script model", value: "Online", dot: "bg-emerald" },
-                { label: "Video pipeline", value: "Rendering 2/4", dot: "bg-amber" },
+                { label: "Video pipeline", value: "Online", dot: "bg-emerald" },
                 { label: "Voice synthesis", value: "Online", dot: "bg-emerald" },
                 { label: "Thumbnail engine", value: "Online", dot: "bg-emerald" },
               ].map((row) => (
