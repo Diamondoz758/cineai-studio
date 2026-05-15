@@ -97,8 +97,9 @@ function Dashboard() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {PROJECTS.map((p, i) => (
               <Link
-                key={p.title}
+                key={p.slug}
                 to="/video"
+                search={{ project: p.slug }}
                 aria-label={`Open project: ${p.title}`}
                 className="block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-violet"
               >
